@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import { api, UnauthorizedError } from './api.js';
+import { api, DEMO, exportCsv, UnauthorizedError } from './api.js';
 
 const STATUS_LABELS = { new: 'Новая', in_progress: 'В работе', done: 'Обработана', rejected: 'Отклонена' };
 const PAGE_SIZE = 20;
@@ -39,6 +39,11 @@ function Login({ onLogin }) {
           autoComplete="current-password" required /></label>
         {error && <p className="error" role="alert">{error}</p>}
         <button type="submit" className="btn btn--primary" disabled={busy}>{busy ? 'Входим…' : 'Войти'}</button>
+        {DEMO && (
+          <p className="demo-hint">
+            Демо-режим: логин <b>admin</b>, пароль <b>demo</b>. Заявки хранятся только в этом браузере.
+          </p>
+        )}
       </form>
     </div>
   );
@@ -203,7 +208,7 @@ function Leads({ admin, onLogout, onUnauthorized }) {
   return (
     <div className="app">
       <header className="topbar">
-        <strong className="topbar__title">Заявки с сайта</strong>
+        <strong className="topbar__title">Заявки с сайта{DEMO && <span className="demo-badge">демо</span>}</strong>
         <div className="topbar__right">
           <span className="muted">{admin}</span>
           <button type="button" className="btn btn--ghost" onClick={onLogout}>Выйти</button>
@@ -228,7 +233,7 @@ function Leads({ admin, onLogout, onUnauthorized }) {
             <option value="">Все статусы</option>
             {meta.statuses.map((s) => <option key={s} value={s}>{STATUS_LABELS[s]}</option>)}
           </select>
-          <a className="btn btn--ghost" href={`/api/admin/leads.csv?${query}`} download>Экспорт CSV</a>
+          <button type="button" className="btn btn--ghost" onClick={() => exportCsv(query)}>Экспорт CSV</button>
         </div>
 
         {error && <p className="error" role="alert">{error}</p>}

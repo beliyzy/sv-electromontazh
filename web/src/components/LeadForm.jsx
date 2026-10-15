@@ -1,6 +1,8 @@
 import { useId, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
+import { DEMO, submitLead } from '../../../shared/demoStore.js';
+
 /**
  * A site form that sends a lead of `type` to the server. `fields` describes the inputs:
  * { name, label, type?: 'text' | 'tel' | 'email' | 'textarea', required?, placeholder? }.
@@ -38,6 +40,19 @@ export default function LeadForm({ type, fields, submitLabel = 'Отправит
     }
 
     setState('sending');
+
+    if (DEMO) {
+      try {
+        submitLead({ ...values, type, consent, page: pathname, website: form.elements.website.value });
+        setState('sent');
+        setValues({});
+        setConsent(false);
+      } catch (e) {
+        setErrors(e.body?.errors ?? {});
+        setState(e.body?.errors ? 'idle' : 'failed');
+      }
+      return;
+    }
 
     try {
       const response = await fetch('/api/leads', {

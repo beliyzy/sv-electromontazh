@@ -90,7 +90,11 @@ img { max-width: 100%; display: block; }
 .btn--outline-light { border-color: rgba(255, 255, 255, 0.35); color: #fff; }
 .btn--outline-light:hover { border-color: #fff; color: #fff; background: rgba(255, 255, 255, 0.06); }
 
-/* ---------- Top bar & header ---------- */
+/* ---------- Demo bar, top bar & header ---------- */
+
+.demo-bar { padding: 8px var(--gutter); text-align: center; font-size: 0.88rem; background: var(--c-accent); color: var(--c-accent-ink); }
+.demo-bar a { color: var(--c-accent-ink); font-weight: 700; text-decoration: underline; }
+
 
 .topbar { background: var(--c-navy-3); color: rgba(255, 255, 255, 0.7); font-size: 0.85rem; }
 .topbar__inner { display: flex; gap: 28px; padding-top: 8px; padding-bottom: 8px; }

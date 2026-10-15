@@ -1,8 +1,9 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
+// The admin is served from <BASE_PATH>admin/, next to the site.
 export default defineConfig({
-  base: '/admin/',
+  base: `${process.env.BASE_PATH ?? '/'}admin/`,
   plugins: [react()],
   server: {
     port: 5174,

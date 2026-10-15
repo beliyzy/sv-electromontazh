@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
 
+import { DEMO } from '../../../shared/demoStore.js';
 import { company, nav } from '../content.js';
 import Icon from './Icon.jsx';
 
@@ -100,6 +101,12 @@ export default function Layout() {
 
   return (
     <>
+      {DEMO && (
+        <div className="demo-bar">
+          Демо-версия: заявки сохраняются в вашем браузере.{' '}
+          <a href={`${import.meta.env.BASE_URL}admin/`}>Открыть админку</a> (admin / demo)
+        </div>
+      )}
       <TopBar />
       <Header />
       <main><Outlet /></main>

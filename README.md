@@ -56,6 +56,27 @@ docker run -p 3000:3000 -v sv-electromontazh-data:/data \
 
 В продакшене ставьте сервер за HTTPS-прокси (nginx, Caddy): cookie админки помечены `Secure`.
 
+## Демо на GitHub
+
+### GitHub Pages — постоянная ссылка
+
+При каждом пуше в `main` workflow `.github/workflows/pages.yml` прогоняет тесты, собирает сайт и админку в демо-режиме
+(`VITE_DEMO=true`) и публикует их:
+
+- сайт: `https://<user>.github.io/sv-electromontazh/`
+- админка: `https://<user>.github.io/sv-electromontazh/admin/` — логин `admin`, пароль `demo`
+
+Сервера на Pages нет: в демо-режиме заявки сохраняются в `localStorage` браузера, админка читает их оттуда же.
+Валидация та же, что на сервере. Заявки видит только тот, кто их отправил, в том же браузере.
+
+Один раз нужно включить: **Settings → Pages → Build and deployment → Source: GitHub Actions**.
+
+### Codespaces — полный проект с сервером
+
+**Code → Codespaces → Create codespace on main.** При создании ставятся зависимости и создаётся `.env`
+(логин `admin`, пароль `demo`), затем запускается `npm run dev`. Сайт откроется на порту 5173,
+админка — на порту 5174 по пути `/admin/` (вкладка **Ports**).
+
 ## Тесты
 
 ```bash

@@ -20,7 +20,7 @@ export default function Contacts() {
 
   return (
     <>
-      <PageHero title="Контакты" />
+      <PageHero title="Контакты" subtitle={`Электрик в ${company.city}: ${company.hours.toLowerCase()}`} />
 
       <section className="section">
         <div className="container reviews">

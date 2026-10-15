@@ -2,6 +2,10 @@ import { test, beforeEach, afterEach } from 'node:test';
 import assert from 'node:assert/strict';
 import bcrypt from 'bcryptjs';
 
+import { mkdtempSync, mkdirSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+
 import { buildApp } from '../src/app.js';
 import { openDb } from '../src/db.js';
 
@@ -146,4 +150,35 @@ test('exports leads to CSV safely', async () => {
   assert.ok(body.includes(`"'=HYPERLINK(""x"")"`));
   assert.ok(body.includes('"Текст с ""кавычками"""'));
   assert.ok(body.includes('"+7 900 000-00-00"'));
+});
+
+test('serves prerendered pages, a real 404 and the admin', async () => {
+  const web = mkdtempSync(join(tmpdir(), 'web-'));
+  const admin = mkdtempSync(join(tmpdir(), 'admin-'));
+  writeFileSync(join(web, 'index.html'), 'home');
+  writeFileSync(join(web, '404.html'), 'not found');
+  mkdirSync(join(web, 'prices'));
+  writeFileSync(join(web, 'prices', 'index.html'), 'prices');
+  mkdirSync(join(web, 'assets'));
+  writeFileSync(join(web, 'assets', 'app-123.js'), 'js');
+  writeFileSync(join(admin, 'index.html'), 'admin');
+
+  await app.close();
+  app = await buildApp({ db: openDb(':memory:'), admin: ADMIN, staticDirs: { web, admin } });
+
+  const get = (url) => app.inject({ method: 'GET', url });
+
+  assert.equal((await get('/')).body, 'home');
+  assert.equal((await get('/prices')).body, 'prices');
+  assert.equal((await get('/prices/')).body, 'prices');
+  assert.equal((await get('/prices?utm=1')).body, 'prices');
+
+  const missing = await get('/no-such-page');
+  assert.equal(missing.statusCode, 404);
+  assert.equal(missing.body, 'not found');
+
+  assert.equal((await get('/../../etc/passwd')).statusCode, 404);
+  assert.equal((await get('/admin/')).body, 'admin');
+  assert.equal((await get('/admin/leads/5')).body, 'admin');
+  assert.match((await get('/assets/app-123.js')).headers['cache-control'], /immutable/);
 });

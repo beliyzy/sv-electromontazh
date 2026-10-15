@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-import { audiences, company, hero, seoText, services, steps } from '../content.js';
+import { audiences, company, faq, hero, seoText, services, steps } from '../content.js';
 import Icon from '../components/Icon.jsx';
 import HeroIllustration from '../components/HeroIllustration.jsx';
 import { EstimateSection, Packages, SectionTitle } from '../components/Sections.jsx';
@@ -93,6 +93,18 @@ export default function Home() {
       </section>
 
       <section className="section">
+        <div className="container faq">
+          <SectionTitle eyebrow="Вопросы" title="Частые вопросы" />
+          {faq.map((item) => (
+            <details key={item.question} className="faq__item">
+              <summary>{item.question}</summary>
+              <p>{item.answer}</p>
+            </details>
+          ))}
+        </div>
+      </section>
+
+      <section className="section section--tinted">
         <div className="container prose prose--card">
           <h2>Электрик в {company.city}</h2>
           {seoText.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}

@@ -4,6 +4,7 @@ import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
 import { DEMO } from '../../../shared/demoStore.js';
 import { company, nav } from '../content.js';
 import Icon from './Icon.jsx';
+import Seo from './Seo.jsx';
 
 function Logo({ light = false }) {
   return (
@@ -101,6 +102,7 @@ export default function Layout() {
 
   return (
     <>
+      <Seo />
       {DEMO && (
         <div className="demo-bar">
           Демо-версия: заявки сохраняются в вашем браузере.{' '}

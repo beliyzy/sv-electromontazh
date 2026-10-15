@@ -4,7 +4,8 @@ import { EstimateSection, Packages, PageHero, SectionTitle } from '../components
 export default function Prices() {
   return (
     <>
-      <PageHero title="Цены" subtitle={`На комплексные работы электрика в ${company.city}`} />
+      <PageHero title={`Цены на услуги электрика в ${company.city}`}
+        subtitle={`Комплексные работы и прайс на отдельные услуги. Выезд мастера — ${company.callOutPrice}.`} />
 
       <section className="section">
         <div className="container">

@@ -272,6 +272,21 @@ img { max-width: 100%; display: block; }
 }
 .step p { color: var(--c-muted); }
 
+.faq { max-width: 860px; }
+.faq__item { border: 1px solid var(--c-border); border-radius: var(--radius); background: #fff; margin-bottom: 12px; transition: box-shadow 0.2s; }
+.faq__item[open] { box-shadow: var(--shadow); }
+.faq__item summary {
+  list-style: none; cursor: pointer; padding: 20px 56px 20px 24px; position: relative;
+  font: 700 1.05rem var(--f-head); color: var(--c-navy);
+}
+.faq__item summary::-webkit-details-marker { display: none; }
+.faq__item summary::after {
+  content: '+'; position: absolute; right: 22px; top: 50%; transform: translateY(-50%); width: 28px; height: 28px;
+  border-radius: 50%; display: grid; place-items: center; background: #fff6dc; color: #9a6b00; font-size: 1.2rem; transition: transform 0.2s;
+}
+.faq__item[open] summary::after { transform: translateY(-50%) rotate(45deg); }
+.faq__item p { margin: 0; padding: 0 24px 22px; color: var(--c-muted); }
+
 .prose { max-width: 860px; }
 .prose p { font-size: 1.05rem; color: #3b4a5e; }
 .prose--card { padding: 44px; border-radius: var(--radius-lg); background: var(--c-tint); border-left: 4px solid var(--c-accent); }

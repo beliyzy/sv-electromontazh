@@ -5,6 +5,7 @@ import fastifyStatic from '@fastify/static';
 import bcrypt from 'bcryptjs';
 import { randomBytes } from 'node:crypto';
 import { existsSync } from 'node:fs';
+import { join, normalize, sep } from 'node:path';
 
 import { leadRepository, sessionRepository } from './db.js';
 import { LEAD_TYPES, STATUSES, validateLead } from './leadTypes.js';
@@ -175,23 +176,49 @@ export async function buildApp({ db, admin, secureCookies = false, leadRateLimit
   }
 
   if (staticDirs.web && existsSync(staticDirs.web)) {
-    await app.register(fastifyStatic, { root: staticDirs.web, prefix: '/' });
+    await app.register(fastifyStatic, {
+      root: staticDirs.web,
+      prefix: '/',
+      // Hashed build assets never change: let browsers cache them for a year.
+      setHeaders: (res, path) => {
+        if (path.includes(`${sep}assets${sep}`)) {
+          res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+        }
+      },
+    });
   }
 
-  // SPA fallback: client-side routes of both apps load their index.html.
   app.setNotFoundHandler((request, reply) => {
     if (request.method !== 'GET' || request.url.startsWith('/api/')) {
       return reply.code(404).send({ error: 'Not found' });
     }
 
-    const isAdmin = request.url === '/admin' || request.url.startsWith('/admin/');
-    const dir = isAdmin ? staticDirs.admin : staticDirs.web;
+    const pathname = decodeURIComponent(request.url.split('?')[0]);
+
+    // The admin is a single page: every path under /admin/ loads it.
+    if (pathname === '/admin' || pathname.startsWith('/admin/')) {
+      return staticDirs.admin && existsSync(staticDirs.admin)
+        ? reply.sendFile('index.html', staticDirs.admin)
+        : reply.code(404).send({ error: 'Not found' });
+    }
+
+    const dir = staticDirs.web;
 
     if (!dir || !existsSync(dir)) {
       return reply.code(404).send({ error: 'Not found' });
     }
 
-    return reply.sendFile('index.html', dir);
+    // Pages of the site are prerendered to <page>/index.html; "/prices" and "/prices/" are the same page.
+    const page = normalize(join(pathname, 'index.html')).replace(/^[/\\]+/, '');
+
+    if (!page.startsWith('..') && existsSync(join(dir, page))) {
+      return reply.sendFile(page, dir);
+    }
+
+    // A real 404 status, not a page with 200: search engines must not index missing pages.
+    return existsSync(join(dir, '404.html'))
+      ? reply.code(404).sendFile('404.html', dir)
+      : reply.sendFile('index.html', dir);
   });
 
   return app;

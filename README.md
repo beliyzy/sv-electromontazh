@@ -56,6 +56,27 @@ docker run -p 3000:3000 -v sv-electromontazh-data:/data \
 
 В продакшене ставьте сервер за HTTPS-прокси (nginx, Caddy): cookie админки помечены `Secure`.
 
+## SEO
+
+При сборке (`npm run build`) каждая страница пререндерится в готовый HTML (`web/scripts/prerender.mjs`):
+поисковики получают полный текст страницы без выполнения JavaScript. Мета-данные страниц — в `web/src/seo.js`.
+
+- свои `title`, `description`, `canonical`, Open Graph на каждой странице;
+- структурированные данные JSON-LD: `Electrician` (адрес, телефон, часы, районы, услуги), `FAQPage` на главной,
+  `BreadcrumbList` на внутренних страницах;
+- `sitemap.xml` и `robots.txt` (админка и API закрыты), `404.html` с кодом 404 и `noindex`.
+
+Сборка для своего домена:
+
+```bash
+SITE_URL=https://ваш-домен.ru \
+YANDEX_VERIFICATION=код-из-вебмастера GOOGLE_VERIFICATION=код-из-search-console \
+npm run build
+```
+
+`SITE_URL` обязателен: из него строятся canonical, sitemap и robots. Демо-сборка (`VITE_DEMO=true`) и `NOINDEX=true`
+закрывают сайт от индексации.
+
 ## Демо на GitHub
 
 ### GitHub Pages — постоянная ссылка
@@ -66,7 +87,8 @@ docker run -p 3000:3000 -v sv-electromontazh-data:/data \
 - сайт: `https://<user>.github.io/sv-electromontazh/`
 - админка: `https://<user>.github.io/sv-electromontazh/admin/` — логин `admin`, пароль `demo`
 
-Сервера на Pages нет: в демо-режиме заявки сохраняются в `localStorage` браузера, админка читает их оттуда же.
+Демо закрыто от индексации (`noindex`, `robots.txt: Disallow: /`): в нём плейсхолдеры, и оно не должно
+конкурировать с основным доменом в поиске. Сервера на Pages нет: в демо-режиме заявки сохраняются в `localStorage` браузера, админка читает их оттуда же.
 Валидация та же, что на сервере. Заявки видит только тот, кто их отправил, в том же браузере.
 
 Один раз нужно включить: **Settings → Pages → Build and deployment → Source: GitHub Actions**.

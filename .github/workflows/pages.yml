@@ -27,21 +27,17 @@ jobs:
 
       - run: npm ci
 
-      - name: Test server
-        run: npm test
-
-      - name: Build site and admin in demo mode
+      - name: Build site
         run: npm run build
         env:
-          VITE_DEMO: 'true'
+          NOINDEX: 'true'
           BASE_PATH: /${{ github.event.repository.name }}/
           SITE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
 
       - name: Assemble Pages artifact
         run: |
-          mkdir -p _site/admin
+          mkdir -p _site
           cp -r web/dist/. _site/
-          cp -r admin/dist/. _site/admin/
           touch _site/.nojekyll
 
       - uses: actions/upload-pages-artifact@v3

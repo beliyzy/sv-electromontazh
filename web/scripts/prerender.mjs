@@ -47,8 +47,6 @@ writeFileSync(join(dist, 'robots.txt'), noindex
   ? 'User-agent: *\nDisallow: /\n'
   : `User-agent: *
 Allow: /
-Disallow: /admin/
-Disallow: /api/
 
 Sitemap: ${siteUrl}/sitemap.xml
 `);

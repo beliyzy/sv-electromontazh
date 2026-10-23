@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
 
-import { DEMO } from '../../../shared/demoStore.js';
 import { company, nav } from '../content.js';
 import Icon from './Icon.jsx';
 import Seo from './Seo.jsx';
@@ -54,7 +53,7 @@ function Header() {
             <Icon name="phone" />
             <span>{company.phone}</span>
           </a>
-          <a className="btn btn--accent btn--sm header__btn" href="#estimate">Вызвать мастера</a>
+          <a className="btn btn--accent btn--sm header__btn" href={company.phoneHref}>Вызвать электрика</a>
         </div>
 
         <button
@@ -77,7 +76,7 @@ function Footer() {
       <div className="container footer__grid">
         <div>
           <Logo light />
-          <p className="footer__muted">Электромонтажные работы в {company.city}</p>
+          <p className="footer__muted">Электромонтажные работы в {company.area}</p>
         </div>
 
         <nav className="footer__nav" aria-label="Разделы сайта">
@@ -103,12 +102,6 @@ export default function Layout() {
   return (
     <>
       <Seo />
-      {DEMO && (
-        <div className="demo-bar">
-          Демо-версия: заявки сохраняются в вашем браузере.{' '}
-          <a href={`${import.meta.env.BASE_URL}admin/`}>Открыть админку</a> (admin / demo)
-        </div>
-      )}
       <TopBar />
       <Header />
       <main><Outlet /></main>

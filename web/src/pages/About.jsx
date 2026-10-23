@@ -1,10 +1,10 @@
-import { about, company } from '../content.js';
+import { about } from '../content.js';
 import { CallOut, EstimateSection, PageHero } from '../components/Sections.jsx';
 
 export default function About() {
   return (
     <>
-      <PageHero title="О компании" />
+      <PageHero title="Обо мне" />
 
       <section className="section">
         <div className="container prose">
@@ -14,7 +14,7 @@ export default function About() {
 
       <section className="section section--tinted">
         <div className="container">
-          <h2 className="center">{company.name} в цифрах</h2>
+          <h2 className="center">В цифрах</h2>
           <div className="stats">
             {about.stats.map((stat) => (
               <div key={stat.label} className="stat">

@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom';
 
 import { company, packages } from '../content.js';
 import Icon from './Icon.jsx';
-import LeadForm, { estimateFields } from './LeadForm.jsx';
 
 export function PageHero({ title, subtitle }) {
   return (
@@ -22,17 +21,19 @@ export function EstimateSection() {
       <div className="container estimate__grid">
         <div>
           <span className="eyebrow">Бесплатно</span>
-          <h2>Заявка на расчёт сметы</h2>
-          <p>Оставьте имя и телефон — электрик перезвонит в течение 15 минут, уточнит задачу и назовёт стоимость.</p>
+          <h2>Расчёт сметы по телефону</h2>
+          <p>Позвоните мне — уточню задачу и сразу назову примерную стоимость.</p>
           <ul className="estimate__perks">
-            <li><Icon name="check" />Расчёт за 15 минут</li>
+            <li><Icon name="check" />Консультация бесплатно</li>
             <li><Icon name="check" />Цена фиксируется в договоре</li>
             <li><Icon name="check" />Без предоплаты</li>
           </ul>
-          <a className="estimate__phone" href={company.phoneHref}><Icon name="phone" />{company.phone}</a>
         </div>
-        <div className="estimate__form">
-          <LeadForm type="estimate" fields={estimateFields} submitLabel="Получить расчёт" />
+        <div className="estimate__call">
+          <span className="estimate__call-label">Звоните</span>
+          <a className="estimate__phone" href={company.phoneHref}><Icon name="phone" />{company.phone}</a>
+          <span className="muted">{company.hours}</span>
+          <a className="btn btn--accent btn--lg" href={company.phoneHref}>Позвонить</a>
         </div>
       </div>
     </section>
@@ -50,9 +51,21 @@ export function Packages() {
           <ul className="checklist">
             {item.features.map((feature) => <li key={feature}><Icon name="check" />{feature}</li>)}
           </ul>
-          <a href="#estimate" className={`btn ${item.featured ? 'btn--accent' : 'btn--primary'}`}>Заказать</a>
+          <a href={company.phoneHref} className={`btn ${item.featured ? 'btn--accent' : 'btn--primary'}`}>Заказать</a>
         </article>
       ))}
+    </div>
+  );
+}
+
+export function CallPanel({ title, text }) {
+  return (
+    <div className="panel call-panel">
+      <h2>{title}</h2>
+      {text && <p className="muted">{text}</p>}
+      <a className="call-panel__phone" href={company.phoneHref}><Icon name="phone" />{company.phone}</a>
+      <span className="muted">{company.hours}</span>
+      <a className="btn btn--accent btn--lg" href={company.phoneHref}>Позвонить</a>
     </div>
   );
 }
@@ -73,7 +86,7 @@ export function CallOut() {
       <div className="container callout__inner">
         <div>
           <h2>Доверьте электрику профессионалу</h2>
-          <p>Ошибки в проводке опасны. Мы сделаем быстро, по нормам и с гарантией.</p>
+          <p>Ошибки в проводке опасны. Сделаю быстро, по нормам и с гарантией.</p>
         </div>
         <div className="callout__actions">
           <a className="btn btn--accent" href={company.phoneHref}>Позвонить</a>

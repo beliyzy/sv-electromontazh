@@ -2,6 +2,5 @@ node_modules/
 dist/
 dist-ssr/
 .env
-server/data/*.db*
 .DS_Store
 .idea/

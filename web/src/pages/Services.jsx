@@ -9,7 +9,7 @@ export default function Services() {
 
   return (
     <>
-      <PageHero title={`Услуги электрика в ${company.city}`} subtitle={`Выезд мастера — ${company.callOutPrice}.`} />
+      <PageHero title={`Услуги электрика в ${company.area}`} subtitle={`Выезд мастера — ${company.callOutPrice}.`} />
 
       {items.map((service, index) => (
         <section key={service.title} className={`section ${index % 2 ? 'section--tinted' : ''}`}>

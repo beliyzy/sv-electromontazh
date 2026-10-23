@@ -18,7 +18,7 @@ export default function Photo() {
 
   return (
     <>
-      <PageHero title={`Фотографии наших работ в ${company.city}`} />
+      <PageHero title={`Фотографии моих работ в ${company.area}`} />
 
       <section className="section">
         <div className="container gallery">

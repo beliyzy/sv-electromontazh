@@ -2,7 +2,7 @@
 // browser (navigation between pages), so search engines and users see the same <head>.
 import { company, faq, nav, services } from './content.js';
 
-const city = company.city; // «в Подольске»
+const city = company.area; // «в Москве и Московской области»
 
 export const routes = [
   {
@@ -20,37 +20,31 @@ export const routes = [
   {
     path: '/services',
     title: `Услуги электрика в ${city}: проводка, счётчики, ремонт | ${company.name}`,
-    description: `${services.map((s) => s.title).slice(0, 5).join(', ')} в ${city}. Работаем с квартирами, домами и организациями.`,
+    description: `${services.map((s) => s.title).slice(0, 5).join(', ')} в ${city}. Работаю с квартирами, домами и организациями.`,
     priority: '0.9',
   },
-  {
-    path: '/photo',
-    title: `Фото работ электриков в ${city} | ${company.name}`,
-    description: `Примеры наших электромонтажных работ в ${city}: монтаж щитков, прокладка проводки, установка освещения.`,
-    priority: '0.6',
-  },
+  // {
+  //   path: '/photo',
+  //   title: `Фото работ электрика в ${city} | ${company.name}`,
+  //   description: `Примеры моих электромонтажных работ в ${city}: монтаж щитков, прокладка проводки, установка освещения.`,
+  //   priority: '0.6',
+  // },
   {
     path: '/about',
-    title: `О компании ${company.name} — электрики в ${city}`,
-    description: `${company.name}: команда электриков в ${city}. Работаем по договору, даём гарантию, используем сертифицированные материалы.`,
+    title: `Обо мне — частный электрик в ${city} | ${company.name}`,
+    description: `Частный электрик в ${city}: все работы выполняю лично, работаю по договору, даю гарантию, использую сертифицированные материалы.`,
     priority: '0.6',
   },
-  {
-    path: '/reviews',
-    title: `Отзывы клиентов о ${company.name} в ${city}`,
-    description: `Отзывы о работе электриков ${company.name} в ${city}. Оставьте свой отзыв о нашей работе.`,
-    priority: '0.6',
-  },
-  {
-    path: '/vacancies',
-    title: `Вакансии: работа электриком в ${city} | ${company.name}`,
-    description: `Ищем электриков в ${city}: стабильный поток заказов, гибкий график, своевременная оплата. Заполните анкету на сайте.`,
-    priority: '0.4',
-  },
+  // {
+  //   path: '/reviews',
+  //   title: `Отзывы клиентов о ${company.name} в ${city}`,
+  //   description: `Отзывы о работе электрика ${company.name} в ${city}.`,
+  //   priority: '0.6',
+  // },
   {
     path: '/contacts',
     title: `Контакты ${company.name} — электрик в ${city}`,
-    description: `Телефон ${company.phone}, ${company.hours.toLowerCase()}. Адрес: ${company.address}. Оставьте заявку — перезвоним за 15 минут.`,
+    description: `Телефон ${company.phone}, ${company.hours.toLowerCase()}. Адрес: ${company.address}. Звоните — отвечу на вопросы и назову цену.`,
     priority: '0.7',
   },
 ];
@@ -58,7 +52,7 @@ export const routes = [
 const NOT_FOUND = {
   path: null,
   title: `Страница не найдена | ${company.name}`,
-  description: 'Такой страницы нет. Перейдите на главную или позвоните нам.',
+  description: 'Такой страницы нет. Перейдите на главную или позвоните мне.',
   noindex: true,
 };
 
@@ -86,7 +80,7 @@ function business(siteUrl) {
       postalCode: company.postalCode,
       addressCountry: 'RU',
     },
-    areaServed: company.areaServed.map((name) => ({ '@type': 'City', name })),
+    areaServed: company.areaServed.map(({ type, name }) => ({ '@type': type, name })),
     hasOfferCatalog: {
       '@type': 'OfferCatalog',
       name: 'Услуги электрика',

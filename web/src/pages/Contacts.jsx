@@ -1,14 +1,6 @@
 import { company } from '../content.js';
 import Icon from '../components/Icon.jsx';
-import LeadForm from '../components/LeadForm.jsx';
-import { PageHero } from '../components/Sections.jsx';
-
-const fields = [
-  { name: 'name', label: 'Имя', required: true, autoComplete: 'name' },
-  { name: 'phone', label: 'Телефон', type: 'tel', required: true, autoComplete: 'tel' },
-  { name: 'email', label: 'Email', type: 'email', autoComplete: 'email', wide: true },
-  { name: 'message', label: 'Сообщение', type: 'textarea' },
-];
+import { CallPanel, PageHero } from '../components/Sections.jsx';
 
 export default function Contacts() {
   const items = [
@@ -20,7 +12,7 @@ export default function Contacts() {
 
   return (
     <>
-      <PageHero title="Контакты" subtitle={`Электрик в ${company.city}: ${company.hours.toLowerCase()}`} />
+      <PageHero title="Контакты" subtitle={`Электрик в ${company.area}: ${company.hours.toLowerCase()}`} />
 
       <section className="section">
         <div className="container reviews">
@@ -33,10 +25,8 @@ export default function Contacts() {
             ))}
           </ul>
 
-          <div className="panel">
-            <h2>Форма обратной связи</h2>
-            <LeadForm type="contact" fields={fields} />
-          </div>
+          <CallPanel title="Позвоните мне"
+            text="Отвечу на вопросы, назову примерную стоимость и договоримся о времени выезда." />
         </div>
       </section>
     </>

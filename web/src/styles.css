@@ -90,11 +90,7 @@ img { max-width: 100%; display: block; }
 .btn--outline-light { border-color: rgba(255, 255, 255, 0.35); color: #fff; }
 .btn--outline-light:hover { border-color: #fff; color: #fff; background: rgba(255, 255, 255, 0.06); }
 
-/* ---------- Demo bar, top bar & header ---------- */
-
-.demo-bar { padding: 8px var(--gutter); text-align: center; font-size: 0.88rem; background: var(--c-accent); color: var(--c-accent-ink); }
-.demo-bar a { color: var(--c-accent-ink); font-weight: 700; text-decoration: underline; }
-
+/* ---------- Top bar & header ---------- */
 
 .topbar { background: var(--c-navy-3); color: rgba(255, 255, 255, 0.7); font-size: 0.85rem; }
 .topbar__inner { display: flex; gap: 28px; padding-top: 8px; padding-bottom: 8px; }
@@ -256,9 +252,10 @@ img { max-width: 100%; display: block; }
 .estimate__phone { display: inline-flex; align-items: center; gap: 10px; color: #fff; font: 800 1.5rem var(--f-head); letter-spacing: -0.02em; }
 .estimate__phone .icon { color: var(--c-accent); }
 .estimate__phone:hover { color: var(--c-accent-2); }
-.estimate__form { background: #fff; color: var(--c-text); padding: 32px; border-radius: var(--radius-lg); box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.5); }
-.estimate__form .btn--primary { background: var(--c-accent); color: var(--c-accent-ink); }
-.estimate__form .btn--primary:hover { background: var(--c-accent-2); }
+.estimate__call { display: grid; gap: 14px; justify-items: start; background: #fff; color: var(--c-text); padding: 32px; border-radius: var(--radius-lg); box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.5); }
+.estimate__call-label { text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.72rem; font-weight: 700; color: #b07a00; }
+.estimate__call .estimate__phone { color: var(--c-navy); }
+.estimate__call .estimate__phone:hover { color: var(--c-navy-2); }
 
 .steps { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; position: relative; }
 .steps::before {
@@ -363,35 +360,12 @@ img { max-width: 100%; display: block; }
 .contact-list .card__icon { margin: 0; width: 48px; height: 48px; border-radius: 14px; }
 .contact-list .muted { font-weight: 400; font-size: 0.85rem; }
 
-/* ---------- Forms ---------- */
+/* ---------- Call panel ---------- */
 
-.lead-form { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-.field { display: grid; gap: 6px; }
-.field--wide { grid-column: 1 / -1; }
-.field__label { font: 600 0.85rem var(--f-head); color: var(--c-navy); }
-.field input, .field textarea {
-  width: 100%; font: inherit; padding: 13px 15px; border-radius: var(--radius);
-  border: 1.5px solid var(--c-border); background: #fbfcfe; color: var(--c-text); transition: 0.15s;
-}
-.field textarea { resize: vertical; }
-.field input::placeholder, .field textarea::placeholder { color: #a3afbf; }
-.field input:focus, .field textarea:focus { outline: none; background: #fff; border-color: var(--c-navy); box-shadow: 0 0 0 4px rgba(255, 194, 26, 0.3); }
-.field [aria-invalid='true'] { border-color: var(--c-error); }
-.field__error { color: var(--c-error); font-size: 0.83rem; }
-.consent { display: flex; gap: 10px; align-items: flex-start; font-size: 0.88rem; color: var(--c-muted); cursor: pointer; }
-.consent input { margin-top: 3px; width: 17px; height: 17px; accent-color: var(--c-navy); }
-.form-failed { color: var(--c-error); margin: 0; }
-.hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
-.lead-form .btn { padding: 15px 26px; }
-
-.lead-form--dark .field__label, .lead-form--dark .consent { color: rgba(255, 255, 255, 0.85); }
-.lead-form--dark .field__error, .lead-form--dark .form-failed { color: #fecaca; }
-
-.form-success { padding: 30px; border-radius: var(--radius-lg); background: #ecfdf3; color: var(--c-text); }
-.form-success strong { display: block; font: 800 1.35rem var(--f-head); color: var(--c-success); margin-bottom: 6px; }
-.form-success--dark { background: rgba(255, 255, 255, 0.1); color: #fff; }
-.form-success--dark strong { color: #fff; }
-.form-success--dark .btn--ghost { background: transparent; color: #fff; border-color: rgba(255, 255, 255, 0.5); }
+.call-panel { display: grid; gap: 14px; justify-items: start; }
+.call-panel h2, .call-panel p { margin: 0; }
+.call-panel__phone { display: inline-flex; align-items: center; gap: 10px; color: var(--c-navy); font: 800 1.5rem var(--f-head); letter-spacing: -0.02em; }
+.call-panel__phone .icon { color: var(--c-accent); }
 
 /* ---------- Footer ---------- */
 
@@ -460,7 +434,7 @@ img { max-width: 100%; display: block; }
   .callout__inner { flex-direction: column; align-items: flex-start; padding: 32px 26px; }
   .gallery { grid-template-columns: repeat(2, 1fr); }
   .call-fab { display: grid; }
-  .panel, .estimate__form { padding: 24px; }
+  .panel, .estimate__call { padding: 24px; }
   .prose--card { padding: 28px; }
   .hero__card { left: 0; }
 }
@@ -469,6 +443,5 @@ img { max-width: 100%; display: block; }
   :root { --gutter: 16px; }
   .logo__text strong { font-size: 1rem; }
   .cards--3, .packages { grid-template-columns: 1fr; }
-  .lead-form { grid-template-columns: 1fr; }
   .hero__actions .btn { width: 100%; }
 }

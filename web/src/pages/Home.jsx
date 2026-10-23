@@ -18,7 +18,7 @@ export default function Home() {
               {hero.bullets.map((bullet) => <li key={bullet}><Icon name="check" />{bullet}</li>)}
             </ul>
             <div className="hero__actions">
-              <a href="#estimate" className="btn btn--primary btn--lg">Вызвать электрика</a>
+              <a href={company.phoneHref} className="btn btn--primary btn--lg">Вызвать электрика</a>
               <a href={company.phoneHref} className="btn btn--outline-light btn--lg">{company.phone}</a>
             </div>
           </div>
@@ -35,7 +35,7 @@ export default function Home() {
 
       <section className="section">
         <div className="container">
-          <SectionTitle eyebrow="Услуги" title={`Полный комплекс электромонтажных услуг в ${company.city}`} />
+          <SectionTitle eyebrow="Услуги" title={`Полный комплекс электромонтажных услуг в ${company.area}`} />
           <div className="cards cards--3">
             {services.map((service, index) => (
               <Link key={service.title} to="/services" className="card card--link card--service">
@@ -53,7 +53,7 @@ export default function Home() {
       <section className="section section--tinted">
         <div className="container">
           <SectionTitle eyebrow="Цены" title="Комплексные работы"
-            subtitle="Окончательную стоимость называем после осмотра — она не меняется в процессе." />
+            subtitle="Окончательную стоимость называю после осмотра — она не меняется в процессе." />
           <Packages />
         </div>
       </section>
@@ -62,7 +62,7 @@ export default function Home() {
 
       <section className="section">
         <div className="container">
-          <SectionTitle eyebrow="Процесс" title="Как мы работаем" />
+          <SectionTitle eyebrow="Процесс" title="Как я работаю" />
           <ol className="steps">
             {steps.map((step, index) => (
               <li key={step.title} className="step">
@@ -77,7 +77,7 @@ export default function Home() {
 
       <section className="section section--tinted">
         <div className="container">
-          <SectionTitle eyebrow="Клиенты" title="С кем мы работаем" />
+          <SectionTitle eyebrow="Клиенты" title="С кем я работаю" />
           <div className="cards cards--2">
             {audiences.map((audience, index) => (
               <div key={audience.title} className="card card--row">
@@ -106,7 +106,7 @@ export default function Home() {
 
       <section className="section section--tinted">
         <div className="container prose prose--card">
-          <h2>Электрик в {company.city}</h2>
+          <h2>Электрик в {company.area}</h2>
           {seoText.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
         </div>
       </section>
